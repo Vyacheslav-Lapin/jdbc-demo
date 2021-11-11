@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.ToString;
@@ -41,6 +42,7 @@ public class JdbcSimpleDemo {
 //    @Cleanup val resultSet = statement.executeQuery("select id, fio, groupId from student where id = '%s'".formatted(vasyaPupkinId));
 
     @Cleanup val preparedStatement = connection.prepareStatement("select id, fio, groupId from student where id = ?");
+
     logStudentById(fedorProkopovId, preparedStatement);
     logStudentById(vasyaPupkinId, preparedStatement);
   }
@@ -63,7 +65,7 @@ public class JdbcSimpleDemo {
 @Builder(toBuilder = true)
 class Student {
 
-  @Builder.Default
+  @Default
   UUID id = randomUUID();
 
   String fio;
