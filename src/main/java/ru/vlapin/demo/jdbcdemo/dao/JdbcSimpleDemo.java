@@ -5,12 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
-import lombok.ToString;
-import lombok.experimental.FieldNameConstants;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
@@ -27,7 +23,8 @@ public class JdbcSimpleDemo {
 
 //    val load= ServiceLoader.load(Driver.class);
 
-    @Cleanup val connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+    @Cleanup val connection = DriverManager.getConnection(
+        "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
     @Cleanup val statement = connection.createStatement();
     statement.executeUpdate("create table if not exists student (id uuid primary key, fio varchar not null, groupId integer)");
 
@@ -58,17 +55,4 @@ public class JdbcSimpleDemo {
           .groupId(resultSet.getInt(groupId))
           .build().toString());
   }
-}
-
-@ToString
-@FieldNameConstants
-@Builder(toBuilder = true)
-class Student {
-
-  @Default
-  UUID id = randomUUID();
-
-  String fio;
-
-  Integer groupId;
 }
