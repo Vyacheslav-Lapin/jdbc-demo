@@ -3,6 +3,7 @@ package ru.vlapin.demo.jdbcdemo.dao;
 import java.util.UUID;
 
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.ToString;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
@@ -15,7 +16,7 @@ import static java.util.UUID.randomUUID;
 @Builder(toBuilder = true)
 public class Student {
 
-  @Builder.Default
+  @Default
   UUID id = randomUUID();
 
   String fio;

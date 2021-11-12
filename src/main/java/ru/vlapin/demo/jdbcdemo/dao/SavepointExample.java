@@ -7,7 +7,7 @@ import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
 
-import static ru.vlapin.demo.jdbcdemo.dao.JdbcDemoWithSchema.getFileAsString;
+import static ru.vlapin.demo.jdbcdemo.dao.JdbcDemoWithSchema.*;
 
 public class SavepointExample {
 

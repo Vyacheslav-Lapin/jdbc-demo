@@ -2,3 +2,5 @@ mail.credentials:
   authMethod: basic
   username: user
   password: qwerty
+
+#server.port: 8190

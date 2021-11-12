@@ -19,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 import static java.util.UUID.randomUUID;
-import static ru.vlapin.demo.jdbcdemo.dao.Student.Fields.fio;
-import static ru.vlapin.demo.jdbcdemo.dao.Student.Fields.groupId;
+import static ru.vlapin.demo.jdbcdemo.dao.Student.Fields.*;
 
 @Slf4j
 @UtilityClass
