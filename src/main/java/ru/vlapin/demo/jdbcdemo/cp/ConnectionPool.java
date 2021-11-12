@@ -10,10 +10,14 @@ import java.util.stream.Stream;
 import io.vavr.CheckedFunction0;
 import io.vavr.Function2;
 import lombok.SneakyThrows;
+import lombok.experimental.NonFinal;
 
-public class ConnectionPool {
+public class ConnectionPool implements AutoCloseable {
 
   ArrayBlockingQueue<PooledConnection> connections;
+
+  @NonFinal
+  volatile boolean isClosed;
 
   Function<Connection, PooledConnection> pooledConnectionMapper =
       Function2.of(PooledConnection::new)
@@ -28,11 +32,20 @@ public class ConnectionPool {
   }
 
   private void returnPooledConnectionToPool(PooledConnection pooledConnection) {
-    connections.add(pooledConnection);
+    if (!isClosed)
+      connections.add(pooledConnection);
+    else
+      pooledConnection.reallyClose();
   }
 
   @SneakyThrows
   public Connection getConnection() {
     return connections.take();
+  }
+
+  @Override
+  public void close() {
+    isClosed = true;
+    connections.forEach(PooledConnection::reallyClose);
   }
 }

@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.jdbcdemo.dao.Student;
@@ -21,9 +22,10 @@ import static ru.vlapin.demo.jdbcdemo.dao.Student.Fields.groupId;
 @Slf4j
 class ConnectionPoolTests {
 
-  ConnectionPool connectionPool = new ConnectionPool(5,
-                                                     "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-                                                     "", "");
+  private final static ConnectionPool connectionPool =
+      new ConnectionPool(5,
+                         "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
+                         "", "");
 
   @Test
   @SneakyThrows
@@ -65,5 +67,10 @@ class ConnectionPoolTests {
           .build();
     else
       throw new RuntimeException("Нет студента c таким id: %s".formatted(uuid));
+  }
+
+  @AfterAll
+  static void tearDown() {
+    connectionPool.close();
   }
 }
